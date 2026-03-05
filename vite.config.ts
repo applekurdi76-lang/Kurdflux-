@@ -1,37 +1,19 @@
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
-  
-  return {
-    // لێرە base زیاد کرا بۆ ئەوەی لە گیتھاب کار بکات
-    base: '/Kurdflux-/', 
-    
-    plugins: [
-      react(), 
-      tailwindcss()
-    ],
-    
-    define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+export default defineConfig({
+  // دڵنیابەرەوە ئەمە ڕێک ناوی ڕیپۆزیتۆرییەکەتە
+  base: '/Kurdflux-/', 
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
-    
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, '.'),
-      },
-    },
-    
-    server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      hmr: process.env.DISABLE_HMR !== 'true',
-    },
-    
-    build: {
-      outDir: 'dist',
-    }
-  };
+  },
+});
 });
